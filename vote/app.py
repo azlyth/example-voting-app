@@ -9,7 +9,8 @@ option_a = os.getenv('OPTION_A', "Cats")
 option_b = os.getenv('OPTION_B', "Dogs")
 hostname = socket.gethostname()
 
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__)
+app.config['APPLICATION_ROOT'] = '/vote'
 
 
 def get_redis():
@@ -18,7 +19,7 @@ def get_redis():
     return g.redis
 
 
-@app.route("/", methods=['POST','GET'])
+@app.route("/", methods=['POST', 'GET'])
 def hello():
     voter_id = request.cookies.get('voter_id')
     if not voter_id:
